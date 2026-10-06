@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>윤파머의 초록빛 우당탕탕 팜스토리 | 도시농업 &amp; 직거래 마켓</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        earth: {
+                            100: '#fdf8f3',
+                            200: '#f7e3d0',
+                            600: '#8c5a3c',
+                            800: '#5c3a21',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+        }
+        .modal-bg {
+            background-color: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+
+    <!-- Top Admin Bar Notification (Shown when logged in as admin) -->
+    <div id="adminModeBanner" class="hidden bg-amber-600 text-white px-4 py-2 text-xs md:text-sm font-medium flex justify-between items-center sticky top-0 z-50 shadow-md">
+        <div class="flex items-center gap-2 container mx-auto">
+            <i class="fa-solid fa-user-shield text-amber-200"></i>
+            <span><strong>[관리자 모드 활성화됨]</strong> 글 작성/수정, 프로필 변경, 상품 가격 및 직접 사진 업로드 권한이 적용 중입니다.</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="openSiteSettingsModal()" class="bg-amber-700 hover:bg-amber-800 text-white px-3 py-1 rounded-md text-xs transition flex items-center gap-1">
+                <i class="fa-solid fa-gear"></i> 사이트/프로필 수정
+            </button>
+            <button onclick="logoutAdmin()" class="bg-amber-900 hover:bg-black text-white px-3 py-1 rounded-md text-xs transition">
+                로그아웃
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="bg-white border-b border-emerald-100 sticky top-0 z-40 shadow-sm">
+        <div class="container mx-auto px-4 py-3.5 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xl font-bold group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div>
+                    <h1 id="siteTitleDisplay" class="font-bold text-lg md:text-xl text-slate-900 leading-tight">
+                        윤파머의 초록빛 우당탕탕 팜스토리
+                    </h1>
+                    <p class="text-xs text-emerald-600 font-medium hidden sm:block">도심 속 생태 농업 &amp; 유기농 텃밭 문화 이야기</p>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-6 font-medium text-sm text-slate-600">
+                <a href="#about" class="hover:text-emerald-600 transition">농장 소개</a>
+                <a href="#journal" class="hover:text-emerald-600 transition">농사일지 &amp; 팁</a>
+                <a href="#shop" class="hover:text-emerald-600 transition">텃밭 수확 마켓</a>
+                <a href="#education" class="hover:text-emerald-600 transition">교육 &amp; 워크숍</a>
+                <a href="#contact" class="hover:text-emerald-600 transition">문의하기</a>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <a href="#contact" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs md:text-sm font-medium px-4 py-2 rounded-full transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>농가 문의</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner Section -->
+    <section class="relative bg-gradient-to-b from-emerald-900 to-emerald-800 text-white py-16 md:py-24 overflow-hidden">
+        <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#22c55e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div class="max-w-xl text-center md:text-left">
+                <span class="inline-block bg-emerald-700/80 text-emerald-200 text-xs font-semibold px-3 py-1 rounded-full mb-4 border border-emerald-500/30">
+                    🌱 도심 속 생태 퍼머컬처 &amp; 도시농업가 윤파머
+                </span>
+                <h2 id="heroHeadline" class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                    흙을 만지며 느끼는<br/>
+                    <span class="text-emerald-300">도심 속 작은 자급자족</span>
+                </h2>
+                <p id="heroSubtitle" class="text-emerald-100 text-sm md:text-base leading-relaxed mb-8">
+                    안녕하세요! 옥상텃밭부터 주말농장까지, 도시 안에서 자연을 배우고 건강한 먹거리를 직접 재배하는 도시농부 윤파머입니다. 실전 농사 노하우 공유부터 생생한 수확물 직거래까지 함께합니다.
+                </p>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                    <a href="#journal" class="bg-white text-emerald-800 hover:bg-emerald-50 font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-lg">
+                        <i class="fa-solid fa-book-open mr-1"></i> 농사일지 보기
+                    </a>
+                    <a href="#shop" class="bg-emerald-600/80 hover:bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition border border-emerald-400/40">
+                        <i class="fa-solid fa-basket-shopping mr-1"></i> 오늘 수확한 작물
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile Card Banner -->
+            <div class="w-full md:w-80 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-center shadow-xl">
+                <div class="relative w-28 h-28 mx-auto mb-4">
+                    <img id="profileImageDisplay" src="https://images.unsplash.com/photo-1592417817098-8f3d6ef23a8d?auto=format&fit=crop&w=400&q=80" alt="윤파머 프로필" class="w-full h-full object-cover rounded-full border-4 border-emerald-300 shadow-md">
+                    <span class="absolute bottom-1 right-1 bg-emerald-500 text-white text-xs p-1.5 rounded-full" title="인증된 도시농업 관리사">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+                </div>
+                <h3 id="profileNameDisplay" class="font-bold text-lg text-white">윤파머 (Yoon Farmer)</h3>
+                <p id="profileSubtextDisplay" class="text-emerald-200 text-xs mb-3">도시농업관리사 / 퍼머컬처 디자이너</p>
+                <div class="flex justify-center gap-2 text-xs text-emerald-100 mb-4 bg-emerald-950/40 py-2 rounded-lg">
+                    <span><strong class="text-white">경력</strong> 6년차</span>
+                    <span>•</span>
+                    <span><strong class="text-white">교육</strong> 120회+</span>
+                    <span>•</span>
+                    <span><strong class="text-white">지역</strong> 서울/경기</span>
+                </div>
+                <a href="#contact" class="block w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold rounded-lg text-xs transition">
+                    강의 및 제휴 문의하기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white border-b border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">ABOUT ME</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-1">우당탕탕 좌충우돌, 진짜 도시농부의 이야기</h2>
+                <p class="text-slate-500 text-sm mt-2">화분 하나로 시작해 옥상 농장, 주말농장까지 경험하며 축적된 생태 농업 이야기를 전달합니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">친환경 퍼머컬처 농법</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        화학 농약이나 인공 비료 없이, 토양의 자연 순환을 돕는 생태 유기농 방식으로 건강한 농작물을 재배합니다.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">맞춤형 도시농업 교육</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        베란다 텃밭 만들기부터 학교 및 기관 텃밭 설계, 생태 가드닝 클래스를 통해 누구나 쉽게 농사를 즐기도록 돕습니다.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition">
+                    <div class="w-12 h-12 bg-sky-100 text-sky-700 rounded-xl flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">신선한 수확물 소량 수확</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        제철에 맞춰 정성껏 가꾼 미니 채소, 특수 허브, 모종 및 농가 부산물을 이웃분들과 소소하게 나눕니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Farming Journal Section -->
+    <section id="journal" class="py-16 bg-slate-50 border-b border-slate-200">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">FARMING LOG &amp; TIPS</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-1">농사일지 &amp; 도시농업 정보</h2>
+                    <p class="text-slate-500 text-sm mt-1">윤파머가 직접 겪고 배운 텃밭 재배 기록과 노하우입니다.</p>
+                </div>
+
+                <!-- Admin Action Button -->
+                <div id="adminLogControls" class="hidden">
+                    <button onclick="openLogModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-plus"></i> 새 농사일지 작성
+                    </button>
+                </div>
+            </div>
+
+            <!-- Posts Grid -->
+            <div id="journalGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Farm Produce Shop Section -->
+    <section id="shop" class="py-16 bg-white border-b border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">HARVEST MARKET</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-1">오늘 수확한 작물 &amp; 텃밭 마켓</h2>
+                    <p class="text-slate-500 text-sm mt-1">도심 속 텃밭에서 정성껏 가꾼 친환경 작물과 모종을 만나보세요.</p>
+                </div>
+
+                <!-- Admin Action Button -->
+                <div id="adminShopControls" class="hidden">
+                    <button onclick="openProductModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-plus"></i> 신규 수확 작물 등록
+                    </button>
+                </div>
+            </div>
+
+            <!-- Shop Grid -->
+            <div id="shopGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Workshops & Classes Section -->
+    <section id="education" class="py-16 bg-emerald-50/60 border-b border-emerald-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">EDUCATION &amp; WORKSHOP</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mt-1">도시농업 출강 &amp; 원데이 클래스</h2>
+                <p class="text-slate-500 text-sm mt-1">초보자도 쉽게 배울 수 있는 실습 중심의 도시 농사 프로그램입니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-emerald-100 shadow-sm">
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-md mb-3 inline-block">입문 과정</span>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">베란다 텃밭 첫걸음</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        햇빛이 적은 아파트 베란다에서도 유기농 상추와 쌈채소를 무럭무럭 키우는 분갈이 및 흙 관리 클래스입니다.
+                    </p>
+                    <div class="text-xs text-slate-500 space-y-1">
+                        <p><i class="fa-regular fa-clock text-emerald-600 mr-1.5"></i> 소요시간: 2시간 (이론 + 실습)</p>
+                        <p><i class="fa-solid fa-gift text-emerald-600 mr-1.5"></i> 제공: 화분 키트 + 씨앗 3종</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-emerald-100 shadow-sm">
+                    <span class="bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-md mb-3 inline-block">심화 과정</span>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">퍼머컬처 천연 퇴비 DIY</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        음식물 쓰레기와 낙엽을 활용하여 냄새 없이 영양 가득한 토양을 만드는 생태 퇴비화 기초 교육입니다.
+                    </p>
+                    <div class="text-xs text-slate-500 space-y-1">
+                        <p><i class="fa-regular fa-clock text-emerald-600 mr-1.5"></i> 소요시간: 2.5시간</p>
+                        <p><i class="fa-solid fa-gift text-emerald-600 mr-1.5"></i> 제공: 발효 유용미생물(EM) 스타터</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-emerald-100 shadow-sm">
+                    <span class="bg-sky-100 text-sky-800 text-xs font-bold px-2.5 py-1 rounded-md mb-3 inline-block">기관 / 학교</span>
+                    <h3 class="font-bold text-lg text-slate-800 mb-2">어린이 &amp; 청소년 스쿨파밍</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed mb-4">
+                        학교 옥상 및 마당 텃밭을 활용하여 생명의 소중함과 관찰력을 키우는 맞춤형 체험형 교육입니다.
+                    </p>
+                    <div class="text-xs text-slate-500 space-y-1">
+                        <p><i class="fa-regular fa-clock text-emerald-600 mr-1.5"></i> 일정: 별도 협의 (정기 수업 가능)</p>
+                        <p><i class="fa-solid fa-gift text-emerald-600 mr-1.5"></i> 대상: 초·중·고 및 지역아동센터</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Inquiry Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="bg-gradient-to-br from-emerald-900 to-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-400 tracking-wider uppercase">GET IN TOUCH</span>
+                        <h2 class="text-2xl md:text-3xl font-bold mt-1 mb-4">농사 상담 및 교육 문의</h2>
+                        <p class="text-emerald-100 text-sm leading-relaxed mb-6">
+                            텃밭 조성 컨설팅, 강의 요청, 농작물 직거래 예약 등 궁금하신 사항은 이메일로 편하게 연락주세요!
+                        </p>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-center gap-3 text-emerald-200">
+                                <div class="w-8 h-8 rounded-full bg-emerald-800/80 flex items-center justify-center text-emerald-300">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </div>
+                                <a href="mailto:iknowjeje@naver.com" class="hover:underline font-medium text-white">
+                                    iknowjeje@naver.com
+                                </a>
+                            </div>
+                            <div class="flex items-center gap-3 text-emerald-200">
+                                <div class="w-8 h-8 rounded-full bg-emerald-800/80 flex items-center justify-center text-emerald-300">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <span>대한민국 서울 / 경기 지역 활동</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Email Form Trigger -->
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10">
+                        <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-emerald-200 mb-1">성함 또는 기관명</label>
+                                <input type="text" id="senderName" required placeholder="홍길동" class="w-full px-3 py-2 bg-white/20 border border-white/20 rounded-lg text-white placeholder-emerald-200/60 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-emerald-200 mb-1">문의 유형</label>
+                                <select id="inquiryType" class="w-full px-3 py-2 bg-slate-800 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                                    <option value="농작물 구매 및 수확물 문의">농작물 구매 / 예약 문의</option>
+                                    <option value="도시농업 강의 및 워크숍 요청">도시농업 강의 / 강의 요청</option>
+                                    <option value="텃밭 조성 컨설팅 문의">텃밭 조성 컨설팅</option>
+                                    <option value="기타 제휴 및 문의">기타 문의</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-emerald-200 mb-1">문의 내용</label>
+                                <textarea id="inquiryMessage" rows="3" required placeholder="문의하실 내용을 자유롭게 적어주세요." class="w-full px-3 py-2 bg-white/20 border border-white/20 rounded-lg text-white placeholder-emerald-200/60 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold rounded-lg text-sm transition shadow-md flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> 이메일로 문의 보내기
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-10 mt-auto border-t border-slate-800">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-center md:text-left">
+                <p class="font-bold text-slate-200 text-sm mb-1" id="footerSiteTitle">윤파머의 초록빛 우당탕탕 팜스토리</p>
+                <p>대표: 윤파머 | 이메일 문의: <a href="mailto:iknowjeje@naver.com" class="text-emerald-400 hover:underline">iknowjeje@naver.com</a></p>
+                <p class="text-slate-500 mt-1">© <span id="currentYear"></span> Yoon Farmer. All rights reserved.</p>
+            </div>
+
+            <!-- Subtle Admin Entry Point (Discreet at bottom right) -->
+            <div class="flex items-center gap-4">
+                <button onclick="openAdminAuthModal()" class="text-slate-600 hover:text-slate-400 transition flex items-center gap-1 py-1 px-2 rounded hover:bg-slate-800" title="관리자 전용">
+                    <i class="fa-solid fa-lock text-[10px]"></i>
+                    <span class="text-[11px]">관리자 로그인</span>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 1. Admin Auth Password Modal -->
+    <div id="adminAuthModal" class="fixed inset-0 modal-bg z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-lg">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-800">관리자 모드 접속</h3>
+                <p class="text-slate-500 text-xs mt-1">비밀번호를 입력하여 관리자 기능을 활성화하세요.</p>
+            </div>
+            
+            <form onsubmit="verifyAdminPassword(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="adminPasswordInput" placeholder="비밀번호 입력" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-center text-slate-800 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div id="authErrorMessage" class="text-rose-500 text-xs text-center hidden font-medium">
+                    비밀번호가 올바르지 않습니다.
+                </div>
+                <div class="flex gap-2">
+                    <button type="button" onclick="closeAdminAuthModal()" class="w-1/2 py-2.5 border border-slate-200 text-slate-600 font-medium rounded-xl text-xs hover:bg-slate-50">
+                        취소
+                    </button>
+                    <button type="submit" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition">
+                        접속하기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Edit Site Title & Profile Settings Modal (Admin Only) -->
+    <div id="siteSettingsModal" class="fixed inset-0 modal-bg z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+                <h3 class="font-bold text-base text-slate-800"><i class="fa-solid fa-sliders text-emerald-600 mr-2"></i>사이트 및 프로필 설정</h3>
+                <button onclick="closeSiteSettingsModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveSiteSettings(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">사이트 이름</label>
+                    <input type="text" id="settingSiteTitle" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">메인 헤드라인 문구</label>
+                    <input type="text" id="settingHeroHeadline" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">프로필 이름</label>
+                    <input type="text" id="settingProfileName" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">프로필 수식어/직함</label>
+                    <input type="text" id="settingProfileSubtext" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                </div>
+                <!-- Profile Image Upload Component -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">프로필 사진 (컴퓨터 파일 업로드 또는 URL)</label>
+                    <div class="flex flex-col gap-2">
+                        <input type="file" id="settingProfileImgFile" accept="image/*" onchange="previewImageFromFile(this, 'profilePreviewImg', 'settingProfileImgUrl')" class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                        <input type="text" id="settingProfileImgUrl" placeholder="또는 이미지 인터넷 링크(URL) 입력" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs">
+                        <div class="mt-1 flex items-center gap-3 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                            <img id="profilePreviewImg" src="" alt="미리보기" class="w-12 h-12 rounded-full object-cover border border-slate-300">
+                            <span class="text-[11px] text-slate-400">사진 등록 시 실시간 적용됩니다.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                    <button type="button" onclick="closeSiteSettingsModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-xs">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition shadow">설정 저장하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Add/Edit Journal Post Modal -->
+    <div id="logModal" class="fixed inset-0 modal-bg z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+                <h3 id="logModalTitle" class="font-bold text-lg text-slate-800">농사일지 작성 및 수정</h3>
+                <button onclick="closeLogModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveLogPost(event)" class="space-y-4">
+                <input type="hidden" id="logEditId">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">카테고리</label>
+                    <select id="logCategory" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                        <option value="농사일지">농사일지</option>
+                        <option value="도시농업 팁">도시농업 팁</option>
+                        <option value="수확 소식">수확 소식</option>
+                        <option value="교육 기록">교육 기록</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">제목</label>
+                    <input type="text" id="logTitle" required placeholder="예: 봄철 방울토마토 곁순 지르기 팁" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                </div>
+                <!-- Journal Image Upload -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">농사 현장 사진 (컴퓨터 파일 업로드 또는 URL)</label>
+                    <input type="file" id="logImageFile" accept="image/*" onchange="previewImageFromFile(this, 'logPreviewImg', 'logImageUrl')" class="block w-full text-xs text-slate-500 mb-2 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                    <input type="text" id="logImageUrl" placeholder="또는 이미지 URL 링크" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs">
+                    <div class="mt-2 h-36 bg-slate-100 rounded-lg overflow-hidden relative border border-slate-200">
+                        <img id="logPreviewImg" src="" alt="일지 사진 미리보기" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">글 내용</label>
+                    <textarea id="logContent" rows="5" required placeholder="농사 일지 및 전달하고 싶은 노하우 내용을 적어주세요." class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                    <button type="button" onclick="closeLogModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-xs">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition shadow">농사일지 저장하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. Add/Edit Shop Crop Item Modal -->
+    <div id="productModal" class="fixed inset-0 modal-bg z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+                <h3 id="productModalTitle" class="font-bold text-lg text-slate-800">오늘 수확한 작물 / 상품 관리</h3>
+                <button onclick="closeProductModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveProductItem(event)" class="space-y-4">
+                <input type="hidden" id="productEditId">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">수확 작물/상품명</label>
+                    <input type="text" id="productTitle" required placeholder="예: 유기농 베란다 루콜라 100g" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">판매 가격 (원)</label>
+                        <input type="number" id="productPrice" required placeholder="5000" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">판매 상태</label>
+                        <select id="productStatus" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                            <option value="판매중">판매중</option>
+                            <option value="예약마감">예약마감</option>
+                            <option value="일시품절">일시품절</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Crop Image Upload -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">작물 사진 (컴퓨터 파일 업로드 또는 URL)</label>
+                    <input type="file" id="productImageFile" accept="image/*" onchange="previewImageFromFile(this, 'productPreviewImg', 'productImageUrl')" class="block w-full text-xs text-slate-500 mb-2 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                    <input type="text" id="productImageUrl" placeholder="또는 이미지 URL 입력" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs">
+                    <div class="mt-2 h-36 bg-slate-100 rounded-lg overflow-hidden relative border border-slate-200">
+                        <img id="productPreviewImg" src="" alt="작물 사진 미리보기" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">작물/상품 설명</label>
+                    <textarea id="productDesc" rows="3" required placeholder="재배 방식, 단위 및 오늘 수확일 등 상세 설명을 입력하세요." class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                    <button type="button" onclick="closeProductModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-xs">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition shadow flex items-center gap-1">
+                        <i class="fa-solid fa-floppy-disk"></i> 저장하여 사이트에 반영하기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Set dynamic current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Application State & Initial Mock Data
+        const DEFAULT_SETTINGS = {
+            siteTitle: "윤파머의 초록빛 우당탕탕 팜스토리",
+            heroHeadline: "흙을 만지며 느끼는<br/><span class=\"text-emerald-300\">도심 속 작은 자급자족</span>",
+            profileName: "윤파머 (Yoon Farmer)",
+            profileSubtext: "도시농업관리사 / 퍼머컬처 디자이너",
+            profileImg: "https://images.unsplash.com/photo-1592417817098-8f3d6ef23a8d?auto=format&fit=crop&w=400&q=80"
+        };
+
+        const DEFAULT_LOGS = [
+            {
+                id: '1',
+                category: '도시농업 팁',
+                title: '베란다 텃밭에서 통풍과 햇빛 문제 해결하는법',
+                imageUrl: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80',
+                date: '2026-09-20',
+                content: '아파트 베란다에서 작물이 웃자라는 가장 큰 이유는 통풍 부족입니다. 미니 선풍기를 활용해 공기를 순환시켜주면 줄기가 탄탄해지고 병충해도 80% 이상 줄어듭니다!'
+            },
+            {
+                id: '2',
+                category: '농사일지',
+                title: '옥상 텃밭 가을 쌈채소 씨앗 뿌리기 완료',
+                imageUrl: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=600&q=80',
+                date: '2026-09-15',
+                content: '적상추, 로메인, 아삭이 상추 씨앗을 줄뿌림했습니다. 가을 햇살을 받고 약 3일 만에 예쁜 떡잎들이 줄지어 올라오는 모습이 너무나 대견합니다.'
+            },
+            {
+                id: '3',
+                category: '수확 소식',
+                title: '올해 첫 애플수박 수확의 기쁨!',
+                imageUrl: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80',
+                date: '2026-08-28',
+                content: '작은 그물망으로 매달아 키운 애플수박을 드디어 수확했습니다. 크기는 작아도 당도가 무려 12브릭스가 넘어 유기농 단맛이 일품입니다.'
+            }
+        ];
+
+        const DEFAULT_PRODUCTS = [
+            {
+                id: 'p1',
+                title: '유기농 베란다 루콜라 & 모둠 쌈채소 (200g)',
+                price: 6000,
+                status: '판매중',
+                imageUrl: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80',
+                desc: '무농약 생태 농법으로 당일 수확하는 쌉싸름하고 고소한 유럽 상추 & 루콜라 세트입니다.'
+            },
+            {
+                id: 'p2',
+                title: '수제 옥상 미니 방울토마토 모종 (3포기)',
+                price: 5000,
+                status: '판매중',
+                imageUrl: 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=600&q=80',
+                desc: '집에서 키우기 쉬운 튼튼한 뿌리의 흑방울토마토 & 대추방울토마토 모종 세트입니다.'
+            },
+            {
+                id: 'p3',
+                title: '친환경 지렁이 분변토 유기질 흙 (5L)',
+                price: 8000,
+                status: '예약마감',
+                imageUrl: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80',
+                desc: '화분 분갈이 시 흙에 섞어주면 식물이 건강하게 자라는 영양 가득한 천연 분변토입니다.'
+            }
+        ];
+
+        // Global State Variables
+        let isAdmin = false;
+        let siteSettings = JSON.parse(localStorage.getItem('yoon_farmer_settings')) || DEFAULT_SETTINGS;
+        let journalLogs = JSON.parse(localStorage.getItem('yoon_farmer_logs')) || DEFAULT_LOGS;
+        let shopProducts = JSON.parse(localStorage.getItem('yoon_farmer_products')) || DEFAULT_PRODUCTS;
+
+        // Save State to LocalStorage for public viewing
+        function persistData() {
+            localStorage.setItem('yoon_farmer_settings', JSON.stringify(siteSettings));
+            localStorage.setItem('yoon_farmer_logs', JSON.stringify(journalLogs));
+            localStorage.setItem('yoon_farmer_products', JSON.stringify(shopProducts));
+        }
+
+        // Helper: Convert Local Image File to Base64 & Preview
+        function previewImageFromFile(fileInput, previewImgId, textInputId) {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const result = e.target.result;
+                    document.getElementById(previewImgId).src = result;
+                    document.getElementById(textInputId).value = result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Admin Auth Modal Handling
+        function openAdminAuthModal() {
+            if(isAdmin) {
+                openSiteSettingsModal();
+                return;
+            }
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('authErrorMessage').classList.add('hidden');
+            document.getElementById('adminAuthModal').classList.remove('hidden');
+        }
+
+        function closeAdminAuthModal() {
+            document.getElementById('adminAuthModal').classList.add('hidden');
+        }
+
+        function verifyAdminPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('adminPasswordInput').value;
+            // Active Password: 0000
+            if (input === '0000') {
+                isAdmin = true;
+                closeAdminAuthModal();
+                updateUIAdminState();
+                showNotification('🔑 관리자 권한으로 로그인되었습니다.');
+            } else {
+                document.getElementById('authErrorMessage').classList.remove('hidden');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdmin = false;
+            updateUIAdminState();
+            showNotification('로그아웃 되었습니다.');
+        }
+
+        function updateUIAdminState() {
+            const banner = document.getElementById('adminModeBanner');
+            const logControls = document.getElementById('adminLogControls');
+            const shopControls = document.getElementById('adminShopControls');
+
+            if (isAdmin) {
+                banner.classList.remove('hidden');
+                logControls.classList.remove('hidden');
+                shopControls.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+                logControls.classList.add('hidden');
+                shopControls.classList.add('hidden');
+            }
+
+            renderSiteSettings();
+            renderLogs();
+            renderShop();
+        }
+
+        // Render Site Settings & Profile
+        function renderSiteSettings() {
+            document.getElementById('siteTitleDisplay').textContent = siteSettings.siteTitle;
+            document.getElementById('footerSiteTitle').textContent = siteSettings.siteTitle;
+            document.getElementById('heroHeadline').innerHTML = siteSettings.heroHeadline;
+            document.getElementById('profileNameDisplay').textContent = siteSettings.profileName || "윤파머 (Yoon Farmer)";
+            document.getElementById('profileSubtextDisplay').textContent = siteSettings.profileSubtext || "도시농업관리사 / 퍼머컬처 디자이너";
+            
+            if(siteSettings.profileImg) {
+                document.getElementById('profileImageDisplay').src = siteSettings.profileImg;
+            }
+        }
+
+        function openSiteSettingsModal() {
+            document.getElementById('settingSiteTitle').value = siteSettings.siteTitle;
+            document.getElementById('settingHeroHeadline').value = siteSettings.heroHeadline;
+            document.getElementById('settingProfileName').value = siteSettings.profileName || "윤파머 (Yoon Farmer)";
+            document.getElementById('settingProfileSubtext').value = siteSettings.profileSubtext || "도시농업관리사 / 퍼머컬처 디자이너";
+            document.getElementById('settingProfileImgUrl').value = siteSettings.profileImg;
+            document.getElementById('profilePreviewImg').src = siteSettings.profileImg;
+            document.getElementById('settingProfileImgFile').value = '';
+            document.getElementById('siteSettingsModal').classList.remove('hidden');
+        }
+
+        function closeSiteSettingsModal() {
+            document.getElementById('siteSettingsModal').classList.add('hidden');
+        }
+
+        function saveSiteSettings(e) {
+            e.preventDefault();
+            siteSettings.siteTitle = document.getElementById('settingSiteTitle').value;
+            siteSettings.heroHeadline = document.getElementById('settingHeroHeadline').value;
+            siteSettings.profileName = document.getElementById('settingProfileName').value;
+            siteSettings.profileSubtext = document.getElementById('settingProfileSubtext').value;
+            siteSettings.profileImg = document.getElementById('settingProfileImgUrl').value || 'https://images.unsplash.com/photo-1592417817098-8f3d6ef23a8d?auto=format&fit=crop&w=400&q=80';
+            
+            persistData();
+            renderSiteSettings();
+            closeSiteSettingsModal();
+            showNotification('프로필 및 사이트 설정이 성공적으로 저장되었습니다.');
+        }
+
+        // Render Farming Journal
+        function renderLogs() {
+            const grid = document.getElementById('journalGrid');
+            grid.innerHTML = '';
+
+            journalLogs.forEach(log => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col";
+                
+                card.innerHTML = `
+                    <div class="relative h-48 bg-slate-200">
+                        <img src="${log.imageUrl || 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80'}" alt="${log.title}" class="w-full h-full object-cover">
+                        <span class="absolute top-3 left-3 bg-emerald-700/90 text-white text-[11px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm">
+                            ${log.category}
+                        </span>
+                        ${isAdmin ? `
+                            <div class="absolute top-3 right-3 flex gap-1">
+                                <button onclick="editLog('${log.id}')" class="bg-white/90 text-slate-700 hover:text-emerald-600 w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-md">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                                <button onclick="deleteLog('${log.id}')" class="bg-white/90 text-rose-600 hover:bg-rose-600 hover:text-white w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-md">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-slate-400 mb-1 font-medium"><i class="fa-regular fa-calendar mr-1"></i>${log.date}</div>
+                            <h3 class="font-bold text-base text-slate-800 mb-2 leading-snug">${log.title}</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed line-clamp-3">${log.content}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Log CRUD Operations
+        function openLogModal(editId = null) {
+            document.getElementById('logImageFile').value = '';
+            if (editId) {
+                const item = journalLogs.find(l => l.id === editId);
+                document.getElementById('logModalTitle').textContent = '농사일지 수정';
+                document.getElementById('logEditId').value = item.id;
+                document.getElementById('logCategory').value = item.category;
+                document.getElementById('logTitle').value = item.title;
+                document.getElementById('logImageUrl').value = item.imageUrl || '';
+                document.getElementById('logPreviewImg').src = item.imageUrl || 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80';
+                document.getElementById('logContent').value = item.content;
+            } else {
+                document.getElementById('logModalTitle').textContent = '새 농사일지 작성';
+                document.getElementById('logEditId').value = '';
+                document.getElementById('logTitle').value = '';
+                document.getElementById('logImageUrl').value = '';
+                document.getElementById('logPreviewImg').src = '';
+                document.getElementById('logContent').value = '';
+            }
+            document.getElementById('logModal').classList.remove('hidden');
+        }
+
+        function closeLogModal() {
+            document.getElementById('logModal').classList.add('hidden');
+        }
+
+        function saveLogPost(e) {
+            e.preventDefault();
+            const editId = document.getElementById('logEditId').value;
+            const category = document.getElementById('logCategory').value;
+            const title = document.getElementById('logTitle').value;
+            const imageUrl = document.getElementById('logImageUrl').value || 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=600&q=80';
+            const content = document.getElementById('logContent').value;
+            const today = new Date().toISOString().split('T')[0];
+
+            if (editId) {
+                const index = journalLogs.findIndex(l => l.id === editId);
+                if (index !== -1) {
+                    journalLogs[index] = { ...journalLogs[index], category, title, imageUrl, content };
+                }
+            } else {
+                journalLogs.unshift({
+                    id: Date.now().toString(),
+                    category,
+                    title,
+                    imageUrl,
+                    content,
+                    date: today
+                });
+            }
+
+            persistData();
+            renderLogs();
+            closeLogModal();
+            showNotification(editId ? '농사일지가 수정되어 저장되었습니다.' : '새 농사일지가 등록 및 저장되었습니다.');
+        }
+
+        function editLog(id) {
+            openLogModal(id);
+        }
+
+        function deleteLog(id) {
+            if (isAdmin && confirm('이 일지를 삭제하시겠습니까?')) {
+                journalLogs = journalLogs.filter(l => l.id !== id);
+                persistData();
+                renderLogs();
+                showNotification('일지가 삭제되었습니다.');
+            }
+        }
+
+        // Render Farm Shop Items
+        function renderShop() {
+            const grid = document.getElementById('shopGrid');
+            grid.innerHTML = '';
+
+            shopProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col justify-between group hover:border-emerald-200 transition";
+                
+                const statusBadge = product.status === '판매중' 
+                    ? `<span class="bg-emerald-600 text-white text-[11px] font-bold px-2 py-0.5 rounded">판매중</span>`
+                    : `<span class="bg-slate-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">${product.status}</span>`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-44 bg-slate-100 overflow-hidden">
+                            <img src="${product.imageUrl || 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80'}" alt="${product.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute top-2 left-2">${statusBadge}</div>
+                            ${isAdmin ? `
+                                <div class="absolute top-2 right-2 flex gap-1 z-10">
+                                    <button onclick="editProduct('${product.id}')" class="bg-white/90 text-slate-700 hover:text-emerald-600 w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-md" title="수정 및 가격 변경">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </button>
+                                    <button onclick="deleteProduct('${product.id}')" class="bg-white/90 text-rose-600 hover:bg-rose-600 hover:text-white w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-md" title="삭제">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-slate-800 text-sm mb-1 leading-snug">${product.title}</h3>
+                            <p class="text-xs text-slate-500 line-clamp-2 mb-3">${product.desc}</p>
+                            <div class="font-extrabold text-lg text-emerald-700">
+                                ${Number(product.price).toLocaleString()}원
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <button onclick="inquireProduct('${product.title}')" class="w-full py-2 bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-700 font-bold text-xs rounded-lg transition flex items-center justify-center gap-1">
+                            <i class="fa-regular fa-paper-plane"></i> 구매 문의하기
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Product CRUD Operations
+        function openProductModal(editId = null) {
+            document.getElementById('productImageFile').value = '';
+            if (editId) {
+                const item = shopProducts.find(p => p.id === editId);
+                document.getElementById('productModalTitle').textContent = '작물 정보 및 가격 수정';
+                document.getElementById('productEditId').value = item.id;
+                document.getElementById('productTitle').value = item.title;
+                document.getElementById('productPrice').value = item.price;
+                document.getElementById('productStatus').value = item.status;
+                document.getElementById('productImageUrl').value = item.imageUrl || '';
+                document.getElementById('productPreviewImg').src = item.imageUrl || 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80';
+                document.getElementById('productDesc').value = item.desc;
+            } else {
+                document.getElementById('productModalTitle').textContent = '신규 수확 작물 등록';
+                document.getElementById('productEditId').value = '';
+                document.getElementById('productTitle').value = '';
+                document.getElementById('productPrice').value = '';
+                document.getElementById('productImageUrl').value = '';
+                document.getElementById('productPreviewImg').src = '';
+                document.getElementById('productDesc').value = '';
+            }
+            document.getElementById('productModal').classList.remove('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        function saveProductItem(e) {
+            e.preventDefault();
+            const editId = document.getElementById('productEditId').value;
+            const title = document.getElementById('productTitle').value;
+            const price = parseInt(document.getElementById('productPrice').value, 10) || 0;
+            const status = document.getElementById('productStatus').value;
+            const imageUrl = document.getElementById('productImageUrl').value || 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80';
+            const desc = document.getElementById('productDesc').value;
+
+            if (editId) {
+                const index = shopProducts.findIndex(p => p.id === editId);
+                if (index !== -1) {
+                    shopProducts[index] = { ...shopProducts[index], title, price, status, imageUrl, desc };
+                }
+            } else {
+                shopProducts.unshift({
+                    id: 'p' + Date.now(),
+                    title,
+                    price,
+                    status,
+                    imageUrl,
+                    desc
+                });
+            }
+
+            persistData();
+            renderShop();
+            closeProductModal();
+            showNotification(editId ? '작물 정보 및 가격이 변경되어 저장되었습니다.' : '새 수확 작물이 등록 및 저장되었습니다.');
+        }
+
+        function editProduct(id) {
+            openProductModal(id);
+        }
+
+        function deleteProduct(id) {
+            if (isAdmin && confirm('이 상품을 삭제하시겠습니까?')) {
+                shopProducts = shopProducts.filter(p => p.id !== id);
+                persistData();
+                renderShop();
+                showNotification('상품이 삭제되었습니다.');
+            }
+        }
+
+        function inquireProduct(productName) {
+            const subject = encodeURIComponent(`[농작물 구매 문의] ${productName}`);
+            const body = encodeURIComponent(`안녕하세요 윤파머님,\n\n구매 및 예약 문의 드립니다.\n- 상품명: ${productName}\n- 수량 / 문의 내용:\n`);
+            window.location.href = `mailto:iknowjeje@naver.com?subject=${subject}&body=${body}`;
+        }
+
+        // Handle Contact Form Submission
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('senderName').value;
+            const type = document.getElementById('inquiryType').value;
+            const message = document.getElementById('inquiryMessage').value;
+
+            const subject = encodeURIComponent(`[${type}] ${name}님의 문의입니다.`);
+            const body = encodeURIComponent(`안녕하세요 Yoon Farmer님,\n\n성함/기관: ${name}\n문의 내용:\n${message}\n\n감사합니다.`);
+
+            window.location.href = `mailto:iknowjeje@naver.com?subject=${subject}&body=${body}`;
+            showNotification('이메일 프로그램이 연결됩니다.');
+        }
+
+        // Custom Notification Toast
+        function showNotification(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 bg-slate-800 text-white px-4 py-3 rounded-xl shadow-2xl text-xs font-medium z-50 transition transform translate-y-2 opacity-0 duration-300 flex items-center gap-2 border border-slate-700';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> ${msg}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initial Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSiteSettings();
+            renderLogs();
+            renderShop();
+        });
+    </script>
+</body>
+</html>
